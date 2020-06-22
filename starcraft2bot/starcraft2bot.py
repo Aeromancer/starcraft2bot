@@ -15,6 +15,8 @@ class basebot(sc2.BotAI):
         await self.build_supplydepot()
         await self.expand()
         await self.build_refinery()
+        await self.offensive_force_buildings()
+        await self.build_offensive_force
 
 
 
