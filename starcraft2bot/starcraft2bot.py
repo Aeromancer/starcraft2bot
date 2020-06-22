@@ -58,3 +58,4 @@ run_game(maps.get("AbyssalReefLE"), [
     Computer(Race.Zerg, Difficulty.Easy)
     ], realtime = True)
 
+#Just a quick thing at the end to make sure I'm not dumb
