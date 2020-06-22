@@ -58,7 +58,8 @@ class basebot(sc2.BotAI):
                     await asyncio.sleep(0.1)
         else:
             if self.can_afford(BARRACKS) and not self.already_pending(BARRACKS):
-                await self.build(BARRACKS, near = random )
+                supplydepot = self.units(SUPPLYDEPOT).ready.random 
+                await self.build(BARRACKS, near = supplydepot )
                 await asyncio.sleep(0.1)
 
     async def build_offensive_force(self):
