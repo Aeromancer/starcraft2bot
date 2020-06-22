@@ -49,7 +49,7 @@ class basebot(sc2.BotAI):
                     await asyncio.sleep(0.1)
 
     async def offensive_force_buildings(self):
-        if self.units(BARRACKS).ready.exists and self.units(SCV) > 20:
+        if self.units(BARRACKS).ready.exists and self.units(SCV).amount > 20:
             if not self.units(ENGINEERINGBAY):
                 if self.can_afford(ENGINEERINGBAY) and not self.already_pending(ENGINEERINGBAY):
                     await self.build(ENGINEERINGBAY)
@@ -64,7 +64,6 @@ class basebot(sc2.BotAI):
             if self.can_afford(MARINE) and self.supply_left > 0:
                 await self.do(brk.train(MARINE))
                 await asyncio.sleep(0.1) 
-
 
 
 
