@@ -47,7 +47,7 @@ class basebot(sc2.BotAI):
                 if worker is None:
                     break 
                 if not self.units(REFINERY).closer_than(1.0, vaspene).exists:
-                    if self.units(SVC).amount > 16:
+                    if self.units(SCV).amount > 16:
                         await self.do(worker.build(REFINERY, vaspene))
                         await asyncio.sleep(0.1)
 
