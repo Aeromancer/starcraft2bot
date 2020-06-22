@@ -4,7 +4,7 @@ import sc2, asyncio
 from sc2 import run_game, maps, Race, Difficulty
 from sc2.player import Bot, Computer
 
-from sc2.constants import SUPPLYDEPOT, SCV, COMMANDCENTER, REFINERY
+from sc2.constants import SUPPLYDEPOT, SCV, COMMANDCENTER, REFINERY, ENGINEERINGBAY, BARRACKS, MARINE
 
 class basebot(sc2.BotAI):
     async def on_step(self, iteration):
@@ -47,6 +47,24 @@ class basebot(sc2.BotAI):
                 if not self.units(REFINERY).closer_than(1.0, vaspene).exists:
                     await self.do(worker.build(REFINERY, vaspene))
                     await asyncio.sleep(0.1)
+
+    async def offensive_force_buildings(self):
+        if self.units(BARRACKS).ready.exists and self.units(SCV) > 20:
+            if not self.units(ENGINEERINGBAY):
+                if self.can_afford(ENGINEERINGBAY) and not self.already_pending(ENGINEERINGBAY):
+                    await self.build(ENGINEERINGBAY)
+                    await asyncio.sleep(0.1)
+        else:
+            if self.can_afford(BARRACKS) and not self.already_pending(BARRACKS):
+                await self.build(BARRACKS)
+                await asyncio.sleep(0.1)
+
+    async def build_offensive_force(self):
+        for brk in self.units(BARRACKS).ready.noqueue:
+            if self.can_afford(MARINE) and self.supply_left > 0:
+                await self.do(brk.train(MARINE))
+                await asyncio.sleep(0.1) 
+
 
 
 
