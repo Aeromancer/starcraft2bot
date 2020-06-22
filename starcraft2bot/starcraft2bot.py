@@ -47,8 +47,9 @@ class basebot(sc2.BotAI):
                 if worker is None:
                     break 
                 if not self.units(REFINERY).closer_than(1.0, vaspene).exists:
-                    await self.do(worker.build(REFINERY, vaspene))
-                    await asyncio.sleep(0.1)
+                    if self.units(SVC).amount > 16:
+                        await self.do(worker.build(REFINERY, vaspene))
+                        await asyncio.sleep(0.1)
 
     async def offensive_force_buildings(self):
         if self.units(BARRACKS).ready.exists and self.units(SCV).amount > 20:
@@ -57,10 +58,11 @@ class basebot(sc2.BotAI):
                     await self.build(ENGINEERINGBAY)
                     await asyncio.sleep(0.1)
         else:
-            if self.can_afford(BARRACKS) and not self.already_pending(BARRACKS):
-                supplydepot = self.units(SUPPLYDEPOT).ready.random 
-                await self.build(BARRACKS, near = supplydepot )
-                await asyncio.sleep(0.1)
+            if self.units(SUPPLYDEPOT).ready.exists:
+                if self.can_afford(BARRACKS) and not self.already_pending(BARRACKS):
+                    supplydepot = self.units(SUPPLYDEPOT).ready.random 
+                    await self.build(BARRACKS, near = supplydepot )
+                    await asyncio.sleep(0.1)
 
     async def build_offensive_force(self):
         for brk in self.units(BARRACKS).ready.idle:
