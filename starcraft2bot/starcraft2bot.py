@@ -16,12 +16,12 @@ class basebot(sc2.BotAI):
         await self.expand()
         await self.build_refinery()
         await self.offensive_force_buildings()
-        await self.build_offensive_force
+        await self.build_offensive_force()
 
 
 
     async def build_worker(self):
-        for cc in self.units(COMMANDCENTER).ready.noqueue:
+        for cc in self.units(COMMANDCENTER).ready.idle:
             if self.can_afford(SCV):
                 await self.do(cc.train(SCV))
                 await asyncio.sleep(0.1)
@@ -58,11 +58,11 @@ class basebot(sc2.BotAI):
                     await asyncio.sleep(0.1)
         else:
             if self.can_afford(BARRACKS) and not self.already_pending(BARRACKS):
-                await self.build(BARRACKS)
+                await self.build(BARRACKS, near = random )
                 await asyncio.sleep(0.1)
 
     async def build_offensive_force(self):
-        for brk in self.units(BARRACKS).ready.noqueue:
+        for brk in self.units(BARRACKS).ready.idle:
             if self.can_afford(MARINE) and self.supply_left > 0:
                 await self.do(brk.train(MARINE))
                 await asyncio.sleep(0.1) 
